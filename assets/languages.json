@@ -1,0 +1,33 @@
+{
+	"english": {
+		"title": "Voltage Meter",
+		"dev_con": "Device status:",
+		"connect": "Connected",
+		"connecting": "Connecting...",
+		"disconnect": "Disconnected",
+	        "failed_port": "A használt porton az ezköz nem elérhető",
+		"now_data": "Voltage measured right now:",
+	        "no_data_yet": "No data have been recorded yet",
+	        "start": "Start measuring",
+		"stop": "Stop measuring",
+		"export": "Export measured data",
+		"time": "Time (s)",
+		"volt": "Voltage (mV)"
+	},
+
+	"hungarian": {
+		"title": "Feszültség mérő",
+		"dev_con": "Készülék állapot:",
+		"connect": "Csatlakoztatva",
+		"connecting": "Csatlakozás...",
+		"disconnect": "Nincs csatlakoztatva",
+		"failed_port": "A használt porton az ezköz nem elérhető",
+	        "now_data": "Jelenlegi feszültség:",
+		"no_data_yet": "Még nincs mért adat",
+		"start": "Mérés kezdése",
+		"stop": "Mérés befejezése",
+		"export": "Mért adatok exportálása",
+		"time": "Idő (s)",
+		"volt": "Feszültség (mV)"
+	}
+}
