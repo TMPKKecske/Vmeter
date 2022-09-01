@@ -40,6 +40,12 @@ dependencies:
   device_info: ^2.0.3
   flutter_launcher_icons: ^0.10.0
 
+flutter_icons:
+  android: true
+  image_path: "assets/icon.png"
+  adaptive_icon_backround: "#ffffff"
+  adaptive_icon_foreground: "assets/icon_Foreground.png"
+
 
 dev_dependencies:
   flutter_test:
