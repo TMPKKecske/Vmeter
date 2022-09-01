@@ -1,16 +1,11 @@
-# vmeter
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Vmeter
+This is an app written in the flutter framework, which communicates with an arduino via an OTG cable wich acts as a voltage meter. The app is available in english and hungarian languages.
+##Requiements
+- Minimum recomemended Android version: 10
+- OTG support
+- Allowing permissions what the app needs
+## Installation
+Install the app by clicking releases and downloading the latest apk file to install the app.
+## Locale file location
+assets/languages.json
+Here you can modify the localisation of the app to what you'd like. If you want to add a new language feel free a pull request!
