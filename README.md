@@ -1,7 +1,6 @@
 # Vmeter
 This is an app written in the flutter framework, which communicates with an arduino via an OTG cable wich acts as a voltage meter. The app is available in english and hungarian languages.
 ![image](https://user-images.githubusercontent.com/60364668/188008928-959fc5c7-80ea-4fcf-ab38-ec8146061bc6.png)
-![image](https://user-images.githubusercontent.com/60364668/188009015-c9f7a659-53fb-4907-a922-d80d407f5044.png)
 
 ## Requiements
 - Minimum recomemended Android version: 10
