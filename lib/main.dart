@@ -11,7 +11,6 @@ import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:device_info/device_info.dart';
-import './dataSpot.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,7 +41,6 @@ class _MyAppState extends State<MyApp> {
   StreamSubscription<String>? _subscription;
   Transaction<String>? _transaction;
   UsbDevice? _device;
-  List<DataSpot> _graphSpots = [];
   bool _isRecording = false;
   int _time = 0;
   Color _linecolor = Colors.green;
@@ -83,7 +81,6 @@ class _MyAppState extends State<MyApp> {
     }
     setState(() {
       _status = _deviceState.Connecing;
-      _graphSpots.clear();
       _serialData.clear();
     });
     _device = device;
@@ -100,14 +97,9 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         _status = _deviceState.Connected;
         _serialData.add(line);
-
-        if (_graphSpots.length > 9) {
-          _graphSpots.removeAt(0);
-        }
         if (_isRecording) {
           _recordedValues[_time.toInt()] = line;
         }
-        _graphSpots.add(DataSpot(_time, double.parse(line)));
         _time++;
       });
     });
@@ -128,13 +120,12 @@ class _MyAppState extends State<MyApp> {
 
   void dispose() {
     super.dispose();
-    _connectTo(null); 
+    _connectTo(null);
   }
 
   void SetRecording(bool status) async {
     if (status) {
       _time = 0;
-      _graphSpots.clear();
       _recordedValues.clear();
       _isRecording = true;
       _linecolor = Colors.red;
@@ -149,10 +140,12 @@ class _MyAppState extends State<MyApp> {
     if (int.parse(androidInfo.version.release) > 10) {
       if (Permission.manageExternalStorage != PermissionStatus.granted) {
         Permission.manageExternalStorage.request();
-      } //if user not grants permission the app cannot function. Needs a fix 
+        print("external");
+      } //if user not grants permission the app cannot function. Needs a fix
     } else {
       if (Permission.storage != PermissionStatus.granted) {
         Permission.storage.request();
+        print("internal");
       }
     }
 
@@ -160,15 +153,27 @@ class _MyAppState extends State<MyApp> {
     if (result != null) {
       int n = 1;
       var excel = Excel.createExcel();
-      excel.updateCell('Sheet1', CellIndex.indexByString("B1"),
-          "Voltage:"); //locale this!!44!!!
-      excel.updateCell('Sheet1', CellIndex.indexByString("A1"), "Time:");
+      excel.updateCell('Sheet1', CellIndex.indexByString("B1"), "Voltage (mV):"); //should I locale this?
+      excel.updateCell('Sheet1', CellIndex.indexByString("A1"), "Time (s):");
       _recordedValues.forEach((key, value) {
         n++;
         excel.updateCell('Sheet1', CellIndex.indexByString("A${n}"), key);
         excel.updateCell('Sheet1', CellIndex.indexByString("B${n}"), value);
       });
-      File("${result}/test.xlsx")
+
+      Directory path = Directory(result);
+
+      var files = path.listSync(recursive: true, followLinks: false);
+      int amountofExelfiles = 1;
+      for (var s in files) {
+        String path = s.path;
+	print(s.path);
+        if (path.contains(".xlsx") && path.contains("Result")) {
+          amountofExelfiles++;
+        }
+      }
+      if (Directory("${result}/Result$amountofExelfiles.xlsx").existsSync()) {amountofExelfiles++;}
+      File("${result}/Result$amountofExelfiles.xlsx")
         ..createSync(recursive: false)
         ..writeAsBytesSync(excel.encode()!);
     }
@@ -261,14 +266,18 @@ class _MyAppState extends State<MyApp> {
                                   }
                                 }()),
                                 fontSize: 15)),
-                        Text(_languages["now_data"], style: Theme.of(context).textTheme.headline6),
+                        Text(_languages["now_data"],
+                            style: Theme.of(context).textTheme.headline6),
                         _serialData.isNotEmpty
-                            ? Text("${_serialData[_serialData.length - 1]} mV", style: TextStyle(color: _isRecording ? Colors.red: Colors.black))
+                            ? Text("${_serialData[_serialData.length - 1]} mV",
+                                style: TextStyle(
+                                    color: _isRecording
+                                        ? Colors.red
+                                        : Colors.black))
                             : Text(
                                 _languages["no_data_yet"],
                                 style: TextStyle(color: Colors.grey),
                               ),
-                        //Expanded(child: ChartGraph(_graphSpots, _linecolor, _languages["time"], _languages["volt"])),
                         Container(
                             width: double.infinity,
                             child: Row(
