@@ -7,5 +7,5 @@ This is an app written in the flutter framework, which communicates with an ardu
 ## Installation
 Install the app by clicking releases and downloading the latest apk file to install the app.
 ## Locale file location
-assets/languages.json
+# assets/languages.json 
 Here you can modify the localisation of the app to what you'd like. If you want to add a new language feel free a pull request!
